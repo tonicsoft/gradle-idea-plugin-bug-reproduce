@@ -1,0 +1,27 @@
+group 'idea-plugin-bug-reproduction'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    additionalRuntimeDependency
+    // uncommenting the next line has the desired effect, but we should be able to do this with the idea plugin too according to the docs
+//    runtime.extendsFrom additionalRuntimeDependency
+}
+
+dependencies {
+    additionalRuntimeDependency files('additionalRuntimeDependencyDirectory')
+}
+
+idea {
+    module {
+        scopes.RUNTIME.plus += [configurations.additionalRuntimeDependency]
+    }
+}
+
+
